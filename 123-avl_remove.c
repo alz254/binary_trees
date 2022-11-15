@@ -7,31 +7,28 @@
  * @value: input value
  * Return: no return
  */
+
 void check_balance_avl(avl_t **node, int value)
 {
 	int balance;
 
 	balance = binary_tree_balance(*node);
-
 	if (balance > 1 && value > (*node)->left->n)
 	{
 		*node = binary_tree_rotate_right(*node);
 		return;
 	}
-
 	if (balance < -1 && value < (*node)->right->n)
 	{
 		*node = binary_tree_rotate_left(*node);
 		return;
 	}
-
 	if (balance > 1 && value < (*node)->left->n)
 	{
 		(*node)->left = binary_tree_rotate_left((*node)->left);
 		*node = binary_tree_rotate_right(*node);
 		return;
 	}
-
 	if (balance < -1 && value > (*node)->right->n)
 	{
 		(*node)->right = binary_tree_rotate_right((*node)->right);
@@ -47,6 +44,7 @@ void check_balance_avl(avl_t **node, int value)
  * @mode: 1 for inorder sucessor, 2 for inorder precessor
  * Return: pointer to the next/previous node
  */
+
 avl_t *inorder_sucessor(avl_t *tree, int mode)
 {
 	avl_t *node;
@@ -56,13 +54,15 @@ avl_t *inorder_sucessor(avl_t *tree, int mode)
 		if (tree->left == NULL)
 		{
 			if (tree == tree->parent->left)
+			{
 				tree->parent->left = NULL;
+			}
 			else
+			{
 				tree->parent->right = NULL;
-
+			}
 			return (tree);
 		}
-
 		node = inorder_sucessor(tree->left, 1);
 	}
 	else
@@ -70,13 +70,15 @@ avl_t *inorder_sucessor(avl_t *tree, int mode)
 		if (tree->right == NULL)
 		{
 			if (tree == tree->parent->right)
+			{
 				tree->parent->right = NULL;
+			}
 			else
+			{
 				tree->parent->left = NULL;
-
+			}
 			return (tree);
 		}
-
 		node = inorder_sucessor(tree->right, 2);
 	}
 
@@ -96,7 +98,6 @@ void change_node(avl_t **arg_tree, avl_t **arg_node)
 
 	put_node = *arg_node;
 	tree = *arg_tree;
-
 	if (tree->left && tree->left != put_node)
 	{
 		if (put_node->left)
@@ -104,7 +105,6 @@ void change_node(avl_t **arg_tree, avl_t **arg_node)
 			put_node->parent->right = put_node->left;
 			put_node->left->parent = put_node->parent;
 		}
-
 		put_node->left = tree->left;
 		tree->left->parent = put_node;
 	}
@@ -115,13 +115,10 @@ void change_node(avl_t **arg_tree, avl_t **arg_node)
 			put_node->parent->left = put_node->right;
 			put_node->right->parent = put_node->parent;
 		}
-
 		put_node->right = tree->right;
 		tree->right->parent = put_node;
 	}
-
 	put_node->parent = tree->parent;
-
 	if (tree->parent)
 	{
 		if (tree->parent->left == tree)
@@ -129,7 +126,6 @@ void change_node(avl_t **arg_tree, avl_t **arg_node)
 		else
 			tree->parent->right = put_node;
 	}
-
 	*arg_tree = tree;
 	*arg_node = put_node;
 }
@@ -197,9 +193,9 @@ avl_t *avl_search_remove(avl_t **tree, int value)
 avl_t *avl_remove(avl_t *root, int value)
 {
 	if (root == NULL)
+	{
 		return (NULL);
-
+	}
 	avl_search_remove(&root, value);
-
 	return (root);
 }
